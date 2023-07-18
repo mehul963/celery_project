@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Lead List</title>
+	<style>
+		/* CSS styling for the table */
+		.lead-table {
+			width: 60%;
+			border-collapse: collapse;
+			/* margin-bottom: 20px; */
+			margin: 5em;
+		}
+
+		.lead-table th,
+		.lead-table td {
+			border: 1px solid #ccc;
+			padding: 8px;
+			text-align: left;
+		}
+
+		.lead-table th {
+			background-color: #f2f2f2;
+			font-weight: bold;
+		}
+
+		/* CSS styling for the handlers */
+		.handler {
+			display: inline-block;
+			background-color: #f2f2f2;
+			padding: 4px 8px;
+			margin-right: 4px;
+			border-radius: 4px;
+		}
+
+		header {
+			display: flex;
+			gap: 1em;
+		}
+	</style>
+</head>
+
+<body>
+	<h1>Hello {% if request.user.is_superuser %} Admin {% else %} {{request.user.email}} {% endif %}</h1>
+	<a href="logout">Logout</a>
+	<h2>Lead List</h2>
+
+	<header>
+		<a href="/create_lead">Add Lead</a>
+		<a href="/add_user">Add User</a>
+	</header>
+
+	<div class="flex">
+		{% for user in users %}
+		<div>{{user.email}}</div>
+		{% endfor %}
+	</div>
+	<table class="lead-table">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Phone</th>
+				{% if request.user.is_superuser %}
+					<th>Assigned Handlers</th>
+				{% endif %}
+			</tr>
+		</thead>
+		<tbody>
+			{% for lead in leads %}
+			<tr>
+				<td>{{ lead.name }}</td>
+				<td>{{ lead.phone }}</td>
+				{% if request.user.is_superuser %}
+				<td>
+					<select>
+						{% for handler in lead.handlers.all %}
+						<option class="handler">{{ handler.email }}</option>
+						{% endfor %}
+					</select>
+				</td>
+				{% endif %}
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</body>
+
+</html>

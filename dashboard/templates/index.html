@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login and Register Page</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <style>
+    :root {
+      --background-color-dark: #333;
+      --text-color-dark: #fff;
+      --background-color-light: #f8f9fa;
+      --text-color-light: #333;
+    }
+
+    body {
+      background-color: var(--background-color-dark);
+      color: var(--text-color-dark);
+      transition: background-color 0.5s, color 0.5s;
+    }
+
+    .container {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: var(--background-color-dark);
+      border-radius: 10px;
+      opacity: 0.9;
+      transition: opacity 0.3s;
+    }
+
+    .container:hover {
+      opacity: 1;
+    }
+
+    .form-group label {
+      color: var(--text-color-dark);
+    }
+
+    .btn-primary {
+      background-color: #007bff;
+      border-color: #007bff;
+      transition: background-color 0.5s, border-color 0.5s;
+    }
+
+    .btn-primary:hover {
+      background-color: #0069d9;
+      border-color: #0062cc;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Authentication</h2>
+    <div id="login-form">
+      <h3>Login</h3>
+      <form method="POST" action="login">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="email">Email address</label>
+          <input type="email" name="email" class="form-control" id="email" placeholder="Enter email">
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" name="password" class="form-control" id="password" placeholder="Password">
+        </div>
+        <button type="submit" class="btn btn-primary">Login</button>
+      </form>
+      <p>Don't have an account? <button class="btn btn-link" onclick="showRegisterForm()">Sign up</button></p>
+    </div>
+    <div id="register-form" style="display: none;">
+      <h3>Register</h3>
+      <form method="POST" action="register">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="register-email">Email address</label>
+          <input type="email" name="email" class="form-control" id="register-email" placeholder="Enter email">
+        </div>
+        <div class="form-group">
+          <label for="register-password">Password</label>
+          <input type="password" name="password" class="form-control" id="register-password" placeholder="Password">
+        </div>
+        <button type="submit" class="btn btn-primary">Register</button>
+      </form>
+      <p>Already have an account? <button class="btn btn-link" onclick="showLoginForm()">Login</button></p>
+    </div>
+  </div>
+
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+  <script>
+    function showRegisterForm() {
+      document.getElementById("login-form").style.display = "none";
+      document.getElementById("register-form").style.display = "block";
+      document.documentElement.style.setProperty('--background-color-dark', '#f8f9fa');
+      document.documentElement.style.setProperty('--text-color-dark', '#333');
+    }
+
+    function showLoginForm() {
+      document.getElementById("register-form").style.display = "none";
+      document.getElementById("login-form").style.display = "block";
+      document.documentElement.style.setProperty('--background-color-dark', '#333');
+      document.documentElement.style.setProperty('--text-color-dark', '#fff');
+    }
+  </script>
+</body>
+</html>
